@@ -1,0 +1,19 @@
+{
+  "name": "fast-bitset",
+  "version": "0.1.0",
+  "description": "a fast bitset with some neat methods",
+  "main": "Bitset.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattkrick/fast-bitset.git"
+  },
+  "author": "Matt Krick",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mattkrick/fast-bitset/issues"
+  },
+  "homepage": "https://github.com/mattkrick/fast-bitset#readme"
+}
