@@ -4,7 +4,8 @@
   "description": "a fast bitset with some neat methods",
   "main": "app/Bitset.js",
   "scripts": {
-    "test": "./node_modules/.bin/jasmine-node spec"
+    "test": "./node_modules/.bin/jasmine-node spec",
+    "docs": "jsdoc2md app/*.js > api.md"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,8 @@
     "url": "https://github.com/mattkrick/fast-bitset/issues"
   },
   "homepage": "https://github.com/mattkrick/fast-bitset#readme",
-  "dependencies": {
-    "jasmine-node": "^1.14.5"
+  "devDependencies": {
+    "jasmine-node": "^1.14.5",
+    "jsdoc-to-markdown": "^1.1.1"
   }
 }

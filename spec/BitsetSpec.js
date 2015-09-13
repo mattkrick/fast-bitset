@@ -86,6 +86,14 @@ describe("BitSet", function () {
     expect(bs.get(31)).toBe(false);
   });
 
+  it('should toggle a range', function () {
+    var bs = new BitSet(100);
+    bs.toggleRange(31,35);
+    bs.toggleRange(32,34);
+    bs.toggleRange(33,33);
+    expect(bs.dehydrate()).toBe('0,21,0,0,99');
+  });
+
   it('should unset a range', function () {
     var bs = new BitSet(100);
     bs.setRange(29,59);
