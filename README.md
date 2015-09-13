@@ -3,7 +3,7 @@ A fast bitset with some nice methods.
 
 ##Features
 - Outperforms all other bitset packages in terms of speed and space
-- All bit operations execute in O(1) (no iterating through bits)
+- All bit operations execute in O(1) time (does not iterate through bits)
 - Useful methods for graph algorithms
 - Any array that stores booleans can safely be replaced by a bitset for improved speed
 - Uses 64x less space than a nontyped array
@@ -15,7 +15,7 @@ A fast bitset with some nice methods.
 MIT
 
 ##API
- 
+
 * [BitSet](#BitSet)
   * [new BitSet(nBitsOrKey)](#new_BitSet_new)
   * [.get(idx)](#BitSet+get) ⇒ <code>boolean</code>
@@ -42,7 +42,7 @@ MIT
   * [.nextSetBit(idx)](#BitSet+nextSetBit) ⇒ <code>number</code>
   * [.nextUnsetBit(idx)](#BitSet+nextUnsetBit) ⇒ <code>number</code>
   * [.previousSetBit(idx)](#BitSet+previousSetBit) ⇒ <code>number</code>
-  * [.previousUnsetBit(idx:)](#BitSet+previousUnsetBit) ⇒ <code>number</code>
+  * [.previousUnsetBit(idx)](#BitSet+previousUnsetBit) ⇒ <code>number</code>
 
 <a name="new_BitSet_new"></a>
 ### new BitSet(nBitsOrKey)
@@ -297,13 +297,13 @@ Find last set bit, up to a given index
 | idx | <code>number</code> | the starting index for the next unset bit (going in reverse) |
 
 <a name="BitSet+previousUnsetBit"></a>
-### bitSet.previousUnsetBit(idx:) ⇒ <code>number</code>
+### bitSet.previousUnsetBit(idx) ⇒ <code>number</code>
 Find last unset bit, up to a given index
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
-**Returns**: <code>number</code> - : the index of the next unset bit <= idx, or -1 if not found  
+**Returns**: <code>number</code> - the index of the next unset bit <= idx, or -1 if not found  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| idx: | <code>number</code> | the starting index for the next unset bit (going in reverse) |
+| idx | <code>number</code> | the starting index for the next unset bit (going in reverse) |
 
