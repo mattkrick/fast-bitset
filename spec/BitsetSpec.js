@@ -176,4 +176,12 @@ describe("BitSet", function () {
     bs.setRange(60,99);
     expect(bs.getCardinality()).toBe(40);
   });
+
+  it('should return an array of set bits', function () {
+    var bs = new BitSet(100);
+    bs.set(30);
+    bs.setRange(98,99);
+    var range = [30,98,99];
+    expect(bs.getIndices()).toEqual(range);
+  });
 });

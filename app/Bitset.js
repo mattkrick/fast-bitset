@@ -179,6 +179,16 @@ BitSet.prototype.xor = function (bs) {
 };
 
 /**
+ * Run a custom function on every set bit. Faster than iterating over the entire bitset with a `get()`
+ * Source code includes a nice pattern to follow if you need to break the for-loop eaarly
+ * @param {Function} func the function to pass the next set bit to
+ */
+BitSet.prototype.forEach = function(func) {
+  for (var i = this.ffs(); i !== -1; i = this.nextSetBit(i + 1)) {
+    func(i);
+  }
+};
+/**
  * Get the cardinality (count of set bits) for the entire bitset
  * @returns {number} cardinality
  */
@@ -191,6 +201,18 @@ BitSet.prototype.getCardinality = function () {
     setCount += ((((j + (j >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24);
   }
   return setCount;
+};
+
+/**
+ * Get the indices of all set bits. Useful for debugging, but if you can break early, make your own loop
+ * @returns {Array} Indices of all set bits
+ */
+BitSet.prototype.getIndices = function() {
+  var indices = [];
+  this.forEach(function(i) {
+    indices.push(i);
+  });
+  return indices;
 };
 
 /**
