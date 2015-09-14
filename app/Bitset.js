@@ -1,4 +1,4 @@
-//Matt Krick, matt.krick@gmail.com, MIT
+//Matt Krick, matt.krick@gmail.com, MIT License
 
 //each bin holds bits 0 - 30, totaling 31 (sign takes up last bit)
 var BITS_PER_INT = 31;
@@ -33,16 +33,17 @@ BitSet = function (nBitsOrKey) {
  */
 BitSet.prototype.get = function (idx) {
   var word = this._getWord(idx);
-  return ((this.arr[word] >> (idx % BITS_PER_INT)) & 1) === 1;
+  return (word === -1) ? false : (((this.arr[word] >> (idx % BITS_PER_INT)) & 1) === 1);
 };
 
 /**
  * Set a single bit
  * @param {number} idx the position of a single bit to set
- * @returns {boolean} true
+ * @returns {boolean} true if set was successful, else false
  */
 BitSet.prototype.set = function (idx) {
   var word = this._getWord(idx);
+  if (word === -1) return false;
   this.arr[word] |= 1 << (idx % BITS_PER_INT);
   return true;
 };
@@ -51,34 +52,20 @@ BitSet.prototype.set = function (idx) {
  * Set a range of bits
  * @param {number} from the starting index of the range to set
  * @param {number} to the ending index of the range to set
- * @returns {boolean} true
+ * @returns {boolean} true if set was successful, else false
  */
 BitSet.prototype.setRange = function (from, to) {
-  var i, curStart, curEnd, len, mask;
-  if (to < from) {
-    to ^= from;
-    from ^= to;
-    to ^= from;
-  }
-  var startWord = this._getWord(from);
-  var endWord = this._getWord(to);
-  for (i = startWord; i <= endWord; i++) {
-    curStart = (i === startWord) ? from % BITS_PER_INT : 0;
-    curEnd = (i === endWord) ? to % BITS_PER_INT : BITS_PER_INT - 1;
-    len = curEnd - curStart + 1;
-    mask = (((1 << len) - 1) << curStart);
-    this.arr[i] |= mask;
-  }
-  return true;
+  return this._doRange(from, to, _setFunc);
 };
 
 /**
  * Unset a single bit
  * @param {number} idx the position of a single bit to unset
- * @returns {boolean} true
+ * @returns {boolean} true if set was successful, else false
  */
 BitSet.prototype.unset = function (idx) {
   var word = this._getWord(idx);
+  if (word === -1) return false;
   this.arr[word] &= ~(1 << (idx % BITS_PER_INT));
   return true;
 };
@@ -87,34 +74,20 @@ BitSet.prototype.unset = function (idx) {
  * Unset a range of bits
  * @param {number} from the starting index of the range to unset
  * @param {number} to the ending index of the range to unset
- * @returns {boolean} true
+ * @returns {boolean} true if set was successful, else false
  */
 BitSet.prototype.unsetRange = function (from, to) {
-  var i, curStart, curEnd, len, mask;
-  if (to < from) {
-    to ^= from;
-    from ^= to;
-    to ^= from;
-  }
-  var startWord = this._getWord(from);
-  var endWord = this._getWord(to);
-  for (i = startWord; i <= endWord; i++) {
-    curStart = (i === startWord) ? from % BITS_PER_INT : 0;
-    curEnd = (i === endWord) ? to % BITS_PER_INT : BITS_PER_INT - 1;
-    len = curEnd - curStart + 1;
-    mask = 0x7fffffff ^ (((1 << len) - 1) << curStart);
-    this.arr[i] &= mask;
-  }
-  return true;
+  return this._doRange(from, to, _unsetFunc);
 };
 
 /**
  * Toggle a single bit
  * @param {number} idx the position of a single bit to toggle
- * @returns {boolean} true
+ * @returns {boolean} true if set was successful, else false
  */
 BitSet.prototype.toggle = function (idx) {
   var word = this._getWord(idx);
+  if (word === -1) return false;
   this.arr[word] ^= (1 << (idx % BITS_PER_INT));
   return true;
 };
@@ -123,26 +96,12 @@ BitSet.prototype.toggle = function (idx) {
  * Toggle a range of bits
  * @param {number} from the starting index of the range to toggle
  * @param {number} to the ending index of the range to toggle
- * @returns {boolean} true
+ * @returns {boolean} true if set was successful, else false
  */
 BitSet.prototype.toggleRange = function (from, to) {
-  var i, curStart, curEnd, len, mask;
-  if (to < from) {
-    to ^= from;
-    from ^= to;
-    to ^= from;
-  }
-  var startWord = this._getWord(from);
-  var endWord = this._getWord(to);
-  for (i = startWord; i <= endWord; i++) {
-    curStart = (i === startWord) ? from % BITS_PER_INT : 0;
-    curEnd = (i === endWord) ? to % BITS_PER_INT : BITS_PER_INT - 1;
-    len = curEnd - curStart + 1;
-    mask = (((1 << len) - 1) << curStart);
-    this.arr[i] ^= mask;
-  }
-  return true;
+  return this._doRange(from, to, _toggleFunc);
 };
+
 /**
  *
  * Clear an entire bitset
@@ -172,7 +131,7 @@ BitSet.prototype.clone = function () {
  */
 BitSet.prototype.dehydrate = function () {
   var i, lastUsedWord, s = '';
-  for (i = this.arr.length -1; i >= 0; i--) {
+  for (i = this.arr.length - 1; i >= 0; i--) {
     if (i !== 0) {
       lastUsedWord = i;
       break;
@@ -194,16 +153,7 @@ BitSet.prototype.dehydrate = function () {
  * @returns {BitSet} a new bitset that is the bitwise AND of the two
  */
 BitSet.prototype.and = function (bs) {
-  var i, arr1, arr2, len, newBS;
-  arr1 = this.arr;
-  arr2 = bs.arr;
-  len = arr1.length;
-  newBS = new BitSet(this.MAX_BIT + 1);
-  var newArr = newBS.arr;
-  for (i = 0; i < len; i++) {
-    newArr[i] = arr1[i] & arr2[i];
-  }
-  return newBS;
+  return this._op(bs, _and);
 };
 
 /**
@@ -214,16 +164,7 @@ BitSet.prototype.and = function (bs) {
  * @returns {BitSet} a new bitset that is the bitwise OR of the two
  */
 BitSet.prototype.or = function (bs) {
-  var i, arr1, arr2, len, newBS;
-  arr1 = this.arr;
-  arr2 = bs.arr;
-  len = arr1.length;
-  newBS = new BitSet(this.MAX_BIT + 1);
-  var newArr = newBS.arr;
-  for (i = 0; i < len; i++) {
-    newArr[i] = arr1[i] | arr2[i];
-  }
-  return newBS;
+  return this._op(bs, _or);
 };
 
 /**
@@ -234,16 +175,7 @@ BitSet.prototype.or = function (bs) {
  * @returns {BitSet} a new bitset that is the bitwise XOR of the two
  */
 BitSet.prototype.xor = function (bs) {
-  var i, arr1, arr2, len, newBS;
-  arr1 = this.arr;
-  arr2 = bs.arr;
-  len = arr1.length;
-  newBS = new BitSet(this.MAX_BIT + 1);
-  var newArr = newBS.arr;
-  for (i = 0; i < len; i++) {
-    newArr[i] = arr1[i] ^ arr2[i];
-  }
-  return newBS;
+  return this._op(bs, _xor);
 };
 
 /**
@@ -390,6 +322,7 @@ BitSet.prototype.flz = function (_startWord) {
  */
 BitSet.prototype.nextSetBit = function (idx) {
   var startWord = this._getWord(idx);
+  if (startWord === -1) return -1;
   var wordIdx = idx % BITS_PER_INT;
   var len = BITS_PER_INT - wordIdx;
   var mask = ((1 << (len)) - 1) << wordIdx;
@@ -407,13 +340,13 @@ BitSet.prototype.nextSetBit = function (idx) {
  */
 BitSet.prototype.nextUnsetBit = function (idx) {
   var startWord = this._getWord(idx);
+  if (startWord === -1) return -1;
   var mask = ((1 << (idx % BITS_PER_INT)) - 1);
   var reducedWord = this.arr[startWord] | mask;
   if (reducedWord === 0x7fffffff) {
     return this.ffz(startWord + 1);
-  } else {
-    return _lsb(0x7fffffff ^ reducedWord) + startWord * BITS_PER_INT;
   }
+  return _lsb(0x7fffffff ^ reducedWord) + startWord * BITS_PER_INT;
 };
 
 /**
@@ -423,6 +356,7 @@ BitSet.prototype.nextUnsetBit = function (idx) {
  */
 BitSet.prototype.previousSetBit = function (idx) {
   var startWord = this._getWord(idx);
+  if (startWord === -1) return -1;
   var mask = 0x7fffffff >>> (BITS_PER_INT - (idx % BITS_PER_INT) - 1);
   var reducedWord = this.arr[startWord] & mask;
   if (reducedWord > 0) {
@@ -438,27 +372,72 @@ BitSet.prototype.previousSetBit = function (idx) {
  */
 BitSet.prototype.previousUnsetBit = function (idx) {
   var startWord = this._getWord(idx);
+  if (startWord === -1) return -1;
   var wordIdx = idx % BITS_PER_INT;
   var mask = ((1 << (BITS_PER_INT - wordIdx - 1)) - 1) << wordIdx + 1;
   var reducedWord = this.arr[startWord] | mask;
   if (reducedWord === 0x7fffffff) {
     return this.flz(startWord - 1);
-  } else {
-    return _msb(0x7fffffff ^ reducedWord) + startWord * BITS_PER_INT;
   }
+  return _msb(0x7fffffff ^ reducedWord) + startWord * BITS_PER_INT;
 };
 
 /**
  *
  * @param {number} idx position of bit in bitset
- * @returns {number} the word where the index is located
+ * @returns {number} the word where the index is located, or -1 if out of range
  * @private
  */
 BitSet.prototype._getWord = function (idx) {
-  if (idx < 0 || idx > this.MAX_BIT) {
-    throw ('Index outside of range');
+  return (idx < 0 || idx > this.MAX_BIT) ? -1 : ~~(idx / BITS_PER_INT);
+};
+
+/**
+ * Shared function for setting, unsetting, or toggling a range of bits
+ * @param {number} from the starting index of the range to set
+ * @param {number} to the ending index of the range to set
+ * @param {Function} func function to run (set, unset, or toggle)
+ * @returns {boolean} true if set was successful, else false
+ * @private
+ */
+BitSet.prototype._doRange = function (from, to, func) {
+  var i, curStart, curEnd, len;
+  if (to < from) {
+    to ^= from;
+    from ^= to;
+    to ^= from;
   }
-  return ~~(idx / BITS_PER_INT);
+  var startWord = this._getWord(from);
+  var endWord = this._getWord(to);
+  if (startWord === -1 || endWord === -1) return false;
+  for (i = startWord; i <= endWord; i++) {
+    curStart = (i === startWord) ? from % BITS_PER_INT : 0;
+    curEnd = (i === endWord) ? to % BITS_PER_INT : BITS_PER_INT - 1;
+    len = curEnd - curStart + 1;
+    this.arr[i] = func(this.arr[i], len, curStart);
+
+  }
+  return true;
+};
+
+/**
+ * Both bitsets must have the same number of words, no length check is performed to prevent and overflow
+ * @param {BitSet} bs
+ * @param {Function} func the operation to perform (and, or, xor)
+ * @returns {BitSet} a new bitset that is the bitwise operation of the two
+ * @private
+ */
+BitSet.prototype._op = function (bs, func) {
+  var i, arr1, arr2, len, newBS;
+  arr1 = this.arr;
+  arr2 = bs.arr;
+  len = arr1.length;
+  newBS = new BitSet(this.MAX_BIT + 1);
+  var newArr = newBS.arr;
+  for (i = 0; i < len; i++) {
+    newArr[i] = func(arr1[i], arr2[i]);
+  }
+  return newBS;
 };
 
 /**
@@ -487,6 +466,33 @@ function _msb(word) {
   word |= word >> 16;
   word = (word >> 1) + 1;
   return multiplyDeBruijnBitPosition[(word * 0x077CB531) >>> 27];
+}
+
+function _toggleFunc(word, len, curStart) {
+  var mask = (((1 << len) - 1) << curStart);
+  return word ^ mask;
+}
+
+function _setFunc(word, len, curStart) {
+  var mask = (((1 << len) - 1) << curStart);
+  return word | mask;
+}
+
+function _unsetFunc(word, len, curStart) {
+  var mask = 0x7fffffff ^ (((1 << len) - 1) << curStart);
+  return word & mask;
+}
+
+function _and(word1, word2) {
+  return word1 & word2;
+}
+
+function _or(word1, word2) {
+  return word1 | word2;
+}
+
+function _xor(word1, word2) {
+  return word1 ^ word2;
 }
 
 if (typeof define === 'function' && define['amd']) {

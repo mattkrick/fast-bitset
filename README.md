@@ -69,7 +69,7 @@ Check whether a bit at a specific index is set
 Set a single bit
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
-**Returns**: <code>boolean</code> - true  
+**Returns**: <code>boolean</code> - true if set was successful, else false  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -80,7 +80,7 @@ Set a single bit
 Set a range of bits
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
-**Returns**: <code>boolean</code> - true  
+**Returns**: <code>boolean</code> - true if set was successful, else false  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -92,7 +92,7 @@ Set a range of bits
 Unset a single bit
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
-**Returns**: <code>boolean</code> - true  
+**Returns**: <code>boolean</code> - true if set was successful, else false  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -103,7 +103,7 @@ Unset a single bit
 Unset a range of bits
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
-**Returns**: <code>boolean</code> - true  
+**Returns**: <code>boolean</code> - true if set was successful, else false  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -115,7 +115,7 @@ Unset a range of bits
 Toggle a single bit
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
-**Returns**: <code>boolean</code> - true  
+**Returns**: <code>boolean</code> - true if set was successful, else false  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -126,7 +126,7 @@ Toggle a single bit
 Toggle a range of bits
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
-**Returns**: <code>boolean</code> - true  
+**Returns**: <code>boolean</code> - true if set was successful, else false  
 
 | Param | Type | Description |
 | --- | --- | --- |
