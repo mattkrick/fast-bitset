@@ -46,6 +46,14 @@ describe("BitSet", function () {
     expect(bs3.dehydrate()).toBe('1024,0,0,0,99');
   });
 
+  it('should AND a bitset and an index', function () {
+    var bs1 = new BitSet(100);
+    var idx = 77;
+    bs1.setRange(1,10);
+    var bs3 = bs1.and(1);
+    expect(bs3.dehydrate()).toBe('2,0,0,0,99');
+  });
+
   it('should OR two bitsets', function () {
     var bs1 = new BitSet(100);
     var bs2 = new BitSet(100);

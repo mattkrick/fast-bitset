@@ -1,6 +1,7 @@
 # fast-bitset
 
 [![Join the chat at https://gitter.im/mattkrick/fast-bitset](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mattkrick/fast-bitset?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/mattkrick/fast-bitset.svg?branch=master)](https://travis-ci.org/mattkrick/fast-bitset)
 A fast bitset with some nice methods.
 
 ##Features
@@ -30,9 +31,9 @@ MIT
   * [.clear()](#BitSet+clear) ⇒ <code>boolean</code>
   * [.clone()](#BitSet+clone) ⇒ <code>[BitSet](#BitSet)</code>
   * [.dehydrate()](#BitSet+dehydrate) ⇒ <code>string</code>
-  * [.and(bs)](#BitSet+and) ⇒ <code>[BitSet](#BitSet)</code>
-  * [.or(bs)](#BitSet+or) ⇒ <code>[BitSet](#BitSet)</code>
-  * [.xor(bs)](#BitSet+xor) ⇒ <code>[BitSet](#BitSet)</code>
+  * [.and(bsOrIdx)](#BitSet+and) ⇒ <code>[BitSet](#BitSet)</code>
+  * [.or(bsOrIdx)](#BitSet+or) ⇒ <code>[BitSet](#BitSet)</code>
+  * [.xor(bsOrIdx)](#BitSet+xor) ⇒ <code>[BitSet](#BitSet)</code>
   * [.forEach(func)](#BitSet+forEach)
   * [.getCardinality()](#BitSet+getCardinality) ⇒ <code>number</code>
   * [.getIndices()](#BitSet+getIndices) ⇒ <code>Array</code>
@@ -158,40 +159,40 @@ Can rehydrate by passing the result into the constructor
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>string</code> - representation of the bitset  
 <a name="BitSet+and"></a>
-### bitSet.and(bs) ⇒ <code>[BitSet](#BitSet)</code>
+### bitSet.and(bsOrIdx) ⇒ <code>[BitSet](#BitSet)</code>
 Perform a bitwise AND on two bitsets
 Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>[BitSet](#BitSet)</code> - a new bitset that is the bitwise AND of the two  
 
-| Param | Type |
-| --- | --- |
-| bs | <code>[BitSet](#BitSet)</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| bsOrIdx | <code>[BitSet](#BitSet)</code> &#124; <code>Number</code> | a bitset or single index to check (useful for LP, DP problems) |
 
 <a name="BitSet+or"></a>
-### bitSet.or(bs) ⇒ <code>[BitSet](#BitSet)</code>
+### bitSet.or(bsOrIdx) ⇒ <code>[BitSet](#BitSet)</code>
 Perform a bitwise OR on two bitsets
 Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>[BitSet](#BitSet)</code> - a new bitset that is the bitwise OR of the two  
 
-| Param | Type |
-| --- | --- |
-| bs | <code>[BitSet](#BitSet)</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| bsOrIdx | <code>[BitSet](#BitSet)</code> &#124; <code>Number</code> | a bitset or single index to check (useful for LP, DP problems) |
 
 <a name="BitSet+xor"></a>
-### bitSet.xor(bs) ⇒ <code>[BitSet](#BitSet)</code>
+### bitSet.xor(bsOrIdx) ⇒ <code>[BitSet](#BitSet)</code>
 Perform a bitwise XOR on two bitsets
 Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>[BitSet](#BitSet)</code> - a new bitset that is the bitwise XOR of the two  
 
-| Param | Type |
-| --- | --- |
-| bs | <code>[BitSet](#BitSet)</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| bsOrIdx | <code>[BitSet](#BitSet)</code> &#124; <code>Number</code> | a bitset or single index to check (useful for LP, DP problems) |
 
 <a name="BitSet+forEach"></a>
 ### bitSet.forEach(func)
