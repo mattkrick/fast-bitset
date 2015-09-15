@@ -1,5 +1,5 @@
 describe("BitSet", function () {
-  var BitSet = require('../app/BitSet.js');
+  var BitSet = require('../app/BitSet2.js');
 
   it('should set an individual bit', function () {
     var bs = new BitSet(100);

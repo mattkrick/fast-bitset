@@ -147,7 +147,7 @@ BitSet.prototype.dehydrate = function () {
 
 /**
  *
- * Perform a bitwise AND on two bitsets
+ * Perform a bitwise AND on 2 bitsets or 1 bitset and 1 index.
  * Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
  * @param {BitSet | Number} bsOrIdx a bitset or single index to check (useful for LP, DP problems)
  * @returns {BitSet} a new bitset that is the bitwise AND of the two
@@ -158,7 +158,7 @@ BitSet.prototype.and = function (bsOrIdx) {
 
 /**
  *
- * Perform a bitwise OR on two bitsets
+ * Perform a bitwise OR on 2 bitsets or 1 bitset and 1 index.
  * Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
  * @param {BitSet | Number} bsOrIdx a bitset or single index to check (useful for LP, DP problems)
  * @returns {BitSet} a new bitset that is the bitwise OR of the two
@@ -169,7 +169,7 @@ BitSet.prototype.or = function (bsOrIdx) {
 
 /**
  *
- * Perform a bitwise XOR on two bitsets
+ * Perform a bitwise XOR on 2 bitsets or 1 bitset and 1 index.
  * Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
  * @param {BitSet | Number} bsOrIdx a bitset or single index to check (useful for LP, DP problems)
  * @returns {BitSet} a new bitset that is the bitwise XOR of the two
