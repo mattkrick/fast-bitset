@@ -160,7 +160,7 @@ Can rehydrate by passing the result into the constructor
 <a name="BitSet+and"></a>
 ### bitSet.and(bs) ⇒ <code>[BitSet](#BitSet)</code>
 Perform a bitwise AND on two bitsets
-Both bitsets must have the same number of words, no length check is performed to prevent and overflow
+Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>[BitSet](#BitSet)</code> - a new bitset that is the bitwise AND of the two  
@@ -172,7 +172,7 @@ Both bitsets must have the same number of words, no length check is performed to
 <a name="BitSet+or"></a>
 ### bitSet.or(bs) ⇒ <code>[BitSet](#BitSet)</code>
 Perform a bitwise OR on two bitsets
-Both bitsets must have the same number of words, no length check is performed to prevent and overflow
+Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>[BitSet](#BitSet)</code> - a new bitset that is the bitwise OR of the two  
@@ -184,7 +184,7 @@ Both bitsets must have the same number of words, no length check is performed to
 <a name="BitSet+xor"></a>
 ### bitSet.xor(bs) ⇒ <code>[BitSet](#BitSet)</code>
 Perform a bitwise XOR on two bitsets
-Both bitsets must have the same number of words, no length check is performed to prevent and overflow
+Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>[BitSet](#BitSet)</code> - a new bitset that is the bitwise XOR of the two  
@@ -196,7 +196,7 @@ Both bitsets must have the same number of words, no length check is performed to
 <a name="BitSet+forEach"></a>
 ### bitSet.forEach(func)
 Run a custom function on every set bit. Faster than iterating over the entire bitset with a `get()`
-Source code includes a nice pattern to follow if you need to break the for-loop eaarly
+Source code includes a nice pattern to follow if you need to break the for-loop early
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 
@@ -212,7 +212,7 @@ Get the cardinality (count of set bits) for the entire bitset
 **Returns**: <code>number</code> - cardinality  
 <a name="BitSet+getIndices"></a>
 ### bitSet.getIndices() ⇒ <code>Array</code>
-Get the indices of all set bits. Useful for debugging, but if you can break early, make your own loop
+Get the indices of all set bits. Useful for debugging, uses `forEach` internally
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>Array</code> - Indices of all set bits  
@@ -224,8 +224,8 @@ Quickly determine if a bitset is empty
 **Returns**: <code>boolean</code> - true if the entire bitset is empty, else false  
 <a name="BitSet+isEqual"></a>
 ### bitSet.isEqual(bs) ⇒ <code>boolean</code>
-Quickly determine if both bitsets are equal (faster than checking if the XOR of the two is === 0)
-Both bitsets must have the same number of words, no length check is performed to prevent and overflow
+Quickly determine if both bitsets are equal (faster than checking if the XOR of the two is === 0).
+Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>boolean</code> - true if the entire bitset is empty, else false  

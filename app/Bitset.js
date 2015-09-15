@@ -148,7 +148,7 @@ BitSet.prototype.dehydrate = function () {
 /**
  *
  * Perform a bitwise AND on two bitsets
- * Both bitsets must have the same number of words, no length check is performed to prevent and overflow
+ * Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
  * @param {BitSet} bs
  * @returns {BitSet} a new bitset that is the bitwise AND of the two
  */
@@ -159,7 +159,7 @@ BitSet.prototype.and = function (bs) {
 /**
  *
  * Perform a bitwise OR on two bitsets
- * Both bitsets must have the same number of words, no length check is performed to prevent and overflow
+ * Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
  * @param {BitSet} bs
  * @returns {BitSet} a new bitset that is the bitwise OR of the two
  */
@@ -170,7 +170,7 @@ BitSet.prototype.or = function (bs) {
 /**
  *
  * Perform a bitwise XOR on two bitsets
- * Both bitsets must have the same number of words, no length check is performed to prevent and overflow
+ * Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
  * @param {BitSet} bs
  * @returns {BitSet} a new bitset that is the bitwise XOR of the two
  */
@@ -180,7 +180,7 @@ BitSet.prototype.xor = function (bs) {
 
 /**
  * Run a custom function on every set bit. Faster than iterating over the entire bitset with a `get()`
- * Source code includes a nice pattern to follow if you need to break the for-loop eaarly
+ * Source code includes a nice pattern to follow if you need to break the for-loop early
  * @param {Function} func the function to pass the next set bit to
  */
 BitSet.prototype.forEach = function(func) {
@@ -204,7 +204,7 @@ BitSet.prototype.getCardinality = function () {
 };
 
 /**
- * Get the indices of all set bits. Useful for debugging, but if you can break early, make your own loop
+ * Get the indices of all set bits. Useful for debugging, uses `forEach` internally
  * @returns {Array} Indices of all set bits
  */
 BitSet.prototype.getIndices = function() {
@@ -232,8 +232,8 @@ BitSet.prototype.isEmpty = function () {
 
 /**
  *
- * Quickly determine if both bitsets are equal (faster than checking if the XOR of the two is === 0)
- * Both bitsets must have the same number of words, no length check is performed to prevent and overflow
+ * Quickly determine if both bitsets are equal (faster than checking if the XOR of the two is === 0).
+ * Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
  * @param {BitSet} bs
  * @returns {boolean} true if the entire bitset is empty, else false
  */
@@ -443,7 +443,7 @@ BitSet.prototype._doRange = function (from, to, func) {
 };
 
 /**
- * Both bitsets must have the same number of words, no length check is performed to prevent and overflow
+ * Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
  * @param {BitSet} bs
  * @param {Function} func the operation to perform (and, or, xor)
  * @returns {BitSet} a new bitset that is the bitwise operation of the two
