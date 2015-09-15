@@ -1,5 +1,5 @@
 describe("BitSet", function () {
-  var BitSet = require('../app/Bitset.js');
+  var BitSet = require('../app/BitSet.js');
 
   it('should set an individual bit', function () {
     var bs = new BitSet(100);
@@ -48,7 +48,6 @@ describe("BitSet", function () {
 
   it('should AND a bitset and an index', function () {
     var bs1 = new BitSet(100);
-    var idx = 77;
     bs1.setRange(1,10);
     var bs3 = bs1.and(1);
     expect(bs3.dehydrate()).toBe('2,0,0,0,99');
