@@ -31,7 +31,9 @@ MIT
   * [.and(bs)](#BitSet+and) ⇒ <code>[BitSet](#BitSet)</code>
   * [.or(bs)](#BitSet+or) ⇒ <code>[BitSet](#BitSet)</code>
   * [.xor(bs)](#BitSet+xor) ⇒ <code>[BitSet](#BitSet)</code>
+  * [.forEach(func)](#BitSet+forEach)
   * [.getCardinality()](#BitSet+getCardinality) ⇒ <code>number</code>
+  * [.getIndices()](#BitSet+getIndices) ⇒ <code>Array</code>
   * [.isEmpty()](#BitSet+isEmpty) ⇒ <code>boolean</code>
   * [.isEqual(bs)](#BitSet+isEqual) ⇒ <code>boolean</code>
   * [.toString()](#BitSet+toString) ⇒ <code>string</code>
@@ -189,12 +191,29 @@ Both bitsets must have the same number of words, no length check is performed to
 | --- | --- |
 | bs | <code>[BitSet](#BitSet)</code> | 
 
+<a name="BitSet+forEach"></a>
+### bitSet.forEach(func)
+Run a custom function on every set bit. Faster than iterating over the entire bitset with a `get()`
+Source code includes a nice pattern to follow if you need to break the for-loop eaarly
+
+**Kind**: instance method of <code>[BitSet](#BitSet)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| func | <code>function</code> | the function to pass the next set bit to |
+
 <a name="BitSet+getCardinality"></a>
 ### bitSet.getCardinality() ⇒ <code>number</code>
 Get the cardinality (count of set bits) for the entire bitset
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>number</code> - cardinality  
+<a name="BitSet+getIndices"></a>
+### bitSet.getIndices() ⇒ <code>Array</code>
+Get the indices of all set bits. Useful for debugging, but if you can break early, make your own loop
+
+**Kind**: instance method of <code>[BitSet](#BitSet)</code>  
+**Returns**: <code>Array</code> - Indices of all set bits  
 <a name="BitSet+isEmpty"></a>
 ### bitSet.isEmpty() ⇒ <code>boolean</code>
 Quickly determine if a bitset is empty
