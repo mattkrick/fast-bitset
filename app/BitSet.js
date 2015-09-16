@@ -288,7 +288,7 @@ BitSet.prototype.ffs = function (_startWord) {
     fs = _lsb(setVal) + i * BITS_PER_INT;
     break;
   }
-  return fs;
+  return fs <= this.MAX_BIT ? fs : -1;
 };
 
 /**
@@ -306,7 +306,7 @@ BitSet.prototype.ffz = function (_startWord) {
     fz = _lsb(setVal) + i * BITS_PER_INT;
     break;
   }
-  return fz;
+  return fz <= this.MAX_BIT ? fz : -1;
 };
 
 /**
@@ -546,8 +546,5 @@ if (typeof define === 'function' && define['amd']) {
   root['BitSet'] = BitSet;
 }
 
-var bs = new BitSet(100);
-bs.toggleRange(31, 35);
-bs.toggleRange(32, 34);
-bs.toggleRange(33, 33);
-a = bs.dehydrate();
+var bs = new BitSet('2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,255,0,224');
+a = bs.ffz();

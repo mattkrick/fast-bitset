@@ -19,11 +19,22 @@ describe("BitSet", function () {
     expect(bs.ffs()).toBe(31);
   });
 
+  it('should not be able to find first set in an empty bitset', function () {
+    var bs = new BitSet(100);
+    expect(bs.ffs()).toBe(-1);
+  });
+
   it('should find first zero', function () {
     var bs = new BitSet(100);
     bs.setRange(0,31);
     expect(bs.ffz()).toBe(32);
   });
+
+  it('should not be able to find first zero in a full bitset', function () {
+    var bs = new BitSet('2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,255,0,224');
+    expect(bs.ffz()).toBe(-1);
+  });
+
 
   it('should set a range of len 1', function () {
     var bs = new BitSet(100);
