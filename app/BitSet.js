@@ -14,14 +14,22 @@ var multiplyDeBruijnBitPosition = [0, 1, 28, 2, 29, 14, 24, 3, 30, 22, 20, 15, 2
  * @constructor
  */
 BitSet = function (nBitsOrKey) {
+  var wordCount, arrVals, front, leadingZeros, i;
   if (typeof nBitsOrKey === 'number') {
     nBitsOrKey = nBitsOrKey || BITS_PER_INT; //default to 1 word
-    var wordCount = Math.ceil(nBitsOrKey / BITS_PER_INT);
+    wordCount = Math.ceil(nBitsOrKey / BITS_PER_INT);
     this.arr = new Uint32Array(wordCount);
     this.MAX_BIT = nBitsOrKey - 1;
   } else {
-    var arrVals = JSON.parse("[" + nBitsOrKey + "]");
+    arrVals = JSON.parse("[" + nBitsOrKey + "]");
     this.MAX_BIT = arrVals.pop();
+    leadingZeros = arrVals.pop();
+    if (leadingZeros > 0) {
+      front = [];
+      for (i = 0; i < leadingZeros; i++) front[i] = 0;
+      for (i = 0; i < arrVals.length; i++) front[leadingZeros + i] = arrVals[i];
+      arrVals = front;
+    }
     this.arr = new Uint32Array(arrVals);
   }
 };
@@ -124,24 +132,30 @@ BitSet.prototype.clone = function () {
 
 /**
  *
- * Turn the bitset into a comma separated string that skips trailing 0 words and ends with the MAX_BIT.
- * Useful if you need the bitset to be an object key (eg dynamic programming)
+ * Turn the bitset into a comma separated string that skips leading & trailing 0 words.
+ * Ends with the number of leading 0s and MAX_BIT.
+ * Useful if you need the bitset to be an object key (eg dynamic programming).
  * Can rehydrate by passing the result into the constructor
  * @returns {string} representation of the bitset
  */
 BitSet.prototype.dehydrate = function () {
-  var i, lastUsedWord, s = '';
-  for (i = this.arr.length - 1; i >= 0; i--) {
-    if (i !== 0) {
+  var i, lastUsedWord, s;
+  var leadingZeros = 0;
+  for (i = 0; i < this.arr.length; i++) {
+    if (this.arr[i] !== 0) break;
+    leadingZeros++;
+  }
+  for (i = this.arr.length - 1; i >= leadingZeros; i--) {
+    if (this.arr[i] !== 0) {
       lastUsedWord = i;
       break;
     }
   }
-  for (i = 0; i <= lastUsedWord; i++) {
-    var curVal = this.arr[i];
-    s += (curVal + ',');
+  s = '';
+  for (i = leadingZeros; i <= lastUsedWord; i++) {
+    s += (this.arr[i] + ',');
   }
-  s += this.MAX_BIT;
+  s += (leadingZeros + ',' + this.MAX_BIT); //leading 0s, stop numbers
   return s;
 };
 
@@ -531,3 +545,9 @@ if (typeof define === 'function' && define['amd']) {
 } else {
   root['BitSet'] = BitSet;
 }
+
+var bs = new BitSet(100);
+bs.toggleRange(31, 35);
+bs.toggleRange(32, 34);
+bs.toggleRange(33, 33);
+a = bs.dehydrate();

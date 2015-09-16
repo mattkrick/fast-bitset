@@ -1,6 +1,12 @@
 describe("BitSet", function () {
   var BitSet = require('../app/BitSet.js');
 
+  it('should create a bitset from a dehydrated string', function () {
+    var dehydratedBS = '1073741824,2147483647,15,0,99';
+    var bs = new BitSet(dehydratedBS);
+    expect(bs.dehydrate()).toBe(dehydratedBS);
+  });
+
   it('should set an individual bit', function () {
     var bs = new BitSet(100);
     bs.set(31);
@@ -22,13 +28,13 @@ describe("BitSet", function () {
   it('should set a range of len 1', function () {
     var bs = new BitSet(100);
     bs.setRange(31,31);
-    expect(bs.dehydrate()).toBe('0,1,0,0,99');
+    expect(bs.dehydrate()).toBe('1,1,99');
   });
 
   it('should set a range of len 31', function () {
     var bs = new BitSet(100);
     bs.setRange(0,30);
-    expect(bs.dehydrate()).toBe('2147483647,0,0,0,99');
+    expect(bs.dehydrate()).toBe('2147483647,0,99');
   });
 
   it('should set a range that spans 3 words', function () {
@@ -43,14 +49,14 @@ describe("BitSet", function () {
     bs1.setRange(1,10);
     bs2.setRange(10,33);
     var bs3 = bs1.and(bs2);
-    expect(bs3.dehydrate()).toBe('1024,0,0,0,99');
+    expect(bs3.dehydrate()).toBe('1024,0,99');
   });
 
   it('should AND a bitset and an index', function () {
     var bs1 = new BitSet(100);
     bs1.setRange(1,10);
     var bs3 = bs1.and(1);
-    expect(bs3.dehydrate()).toBe('2,0,0,0,99');
+    expect(bs3.dehydrate()).toBe('2,0,99');
   });
 
   it('should OR two bitsets', function () {
@@ -59,7 +65,7 @@ describe("BitSet", function () {
     bs1.setRange(1,10);
     bs2.setRange(10,33);
     var bs3 = bs1.or(bs2);
-    expect(bs3.dehydrate()).toBe('2147483646,7,0,0,99');
+    expect(bs3.dehydrate()).toBe('2147483646,7,0,99');
   });
 
   it('should XOR two bitsets', function () {
@@ -68,7 +74,7 @@ describe("BitSet", function () {
     bs1.setRange(1,10);
     bs2.setRange(10,33);
     var bs3 = bs1.xor(bs2);
-    expect(bs3.dehydrate()).toBe('2147482622,7,0,0,99');
+    expect(bs3.dehydrate()).toBe('2147482622,7,0,99');
   });
 
   it('should detect empty arrays', function () {
@@ -98,14 +104,14 @@ describe("BitSet", function () {
     bs.toggleRange(31,35);
     bs.toggleRange(32,34);
     bs.toggleRange(33,33);
-    expect(bs.dehydrate()).toBe('0,21,0,0,99');
+    expect(bs.dehydrate()).toBe('21,1,99');
   });
 
   it('should unset a range', function () {
     var bs = new BitSet(100);
     bs.setRange(29,59);
     bs.unsetRange(30,58);
-    expect(bs.dehydrate()).toBe('536870912,268435456,0,0,99');
+    expect(bs.dehydrate()).toBe('536870912,268435456,0,99');
   });
 
   it('should clear a bitset', function () {
@@ -169,6 +175,13 @@ describe("BitSet", function () {
     var bs = new BitSet(100);
     bs.setRange(60,99);
     expect(bs.previousUnsetBit(80)).toBe(59);
+  });
+
+  it('should clone a bitset with only 1 word', function () {
+    var bs = new BitSet(10);
+    bs.setRange(6,9);
+    bs2 = bs.clone();
+    expect(bs.dehydrate()).toBe(bs2.dehydrate());
   });
 
   it('should clone a bitset', function () {
