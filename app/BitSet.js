@@ -542,9 +542,4 @@ if (typeof define === 'function' && define['amd']) {
   });
 } else if (typeof exports === 'object') {
   module['exports'] = BitSet;
-} else {
-  root['BitSet'] = BitSet;
 }
-
-var bs = new BitSet('2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,255,0,224');
-a = bs.ffz();
