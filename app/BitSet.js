@@ -239,7 +239,7 @@ BitSet.prototype.getIndices = function () {
 BitSet.prototype.isSubsetOf = function (bs) {
   var arr1 = this.arr;
   var arr2 = bs.arr;
-  var len = Math.max(arr1.length, arr2.length);
+  var len = arr1.length;
   for (var i = 0; i < len; i++) {
     if ((arr1[i] & arr2[i]) !== arr1[i]) {
       return false;
