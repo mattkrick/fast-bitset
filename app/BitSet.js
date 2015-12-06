@@ -233,7 +233,7 @@ BitSet.prototype.getIndices = function () {
  * Checks if one bitset is subset of another. Same thing can be done using _and_ operation and equality check,
  * but then new BitSet would be created, and if one is only interested in yes/no information it would be a waste of memory
  * and additional GC strain.
- * @param {BitSet} bitset a bitset to check
+ * @param {BitSet} bs a bitset to check
  * @returns {Boolean} `true` if provided bitset is a subset of this bitset, `false` otherwise
  */
 BitSet.prototype.isSubsetOf = function (bs) {

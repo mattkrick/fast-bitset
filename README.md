@@ -222,7 +222,7 @@ Get the indices of all set bits. Useful for debugging, uses `forEach` internally
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>Array</code> - Indices of all set bits  
 <a name="BitSet+isSubsetOf"></a>
-### bitSet.isSubsetOf(bitset) ⇒ <code>Boolean</code>
+### bitSet.isSubsetOf(bs) ⇒ <code>Boolean</code>
 Checks if one bitset is subset of another. Same thing can be done using _and_ operation and equality check,
 but then new BitSet would be created, and if one is only interested in yes/no information it would be a waste of memory
 and additional GC strain.
@@ -232,7 +232,7 @@ and additional GC strain.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| bitset | <code>[BitSet](#BitSet)</code> | to check |
+| bs | <code>[BitSet](#BitSet)</code> | a bitset to check |
 
 <a name="BitSet+isEmpty"></a>
 ### bitSet.isEmpty() ⇒ <code>boolean</code>
