@@ -15,7 +15,7 @@ A fast bitset with some nice methods.
 
 ##Installation
  `npm install fast-bitset --save`
- 
+
 ##License
 MIT
 
@@ -39,6 +39,7 @@ MIT
   * [.forEach(func)](#BitSet+forEach)
   * [.getCardinality()](#BitSet+getCardinality) ⇒ <code>number</code>
   * [.getIndices()](#BitSet+getIndices) ⇒ <code>Array</code>
+  * [.isSubsetOf(bitset)](#BitSet+isSubsetOf) ⇒ <code>Boolean</code>
   * [.isEmpty()](#BitSet+isEmpty) ⇒ <code>boolean</code>
   * [.isEqual(bs)](#BitSet+isEqual) ⇒ <code>boolean</code>
   * [.toString()](#BitSet+toString) ⇒ <code>string</code>
@@ -154,15 +155,16 @@ Clone a bitset
 **Returns**: <code>[BitSet](#BitSet)</code> - an copy (by value) of the calling bitset  
 <a name="BitSet+dehydrate"></a>
 ### bitSet.dehydrate() ⇒ <code>string</code>
-Turn the bitset into a comma separated string that skips trailing 0 words and ends with the MAX_BIT.
-Useful if you need the bitset to be an object key (eg dynamic programming)
+Turn the bitset into a comma separated string that skips leading & trailing 0 words.
+Ends with the number of leading 0s and MAX_BIT.
+Useful if you need the bitset to be an object key (eg dynamic programming).
 Can rehydrate by passing the result into the constructor
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>string</code> - representation of the bitset  
 <a name="BitSet+and"></a>
 ### bitSet.and(bsOrIdx) ⇒ <code>[BitSet](#BitSet)</code>
-Perform a bitwise AND on two bitsets
+Perform a bitwise AND on 2 bitsets or 1 bitset and 1 index.
 Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
@@ -174,7 +176,7 @@ Both bitsets must have the same number of words, no length check is performed to
 
 <a name="BitSet+or"></a>
 ### bitSet.or(bsOrIdx) ⇒ <code>[BitSet](#BitSet)</code>
-Perform a bitwise OR on two bitsets
+Perform a bitwise OR on 2 bitsets or 1 bitset and 1 index.
 Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
@@ -186,7 +188,7 @@ Both bitsets must have the same number of words, no length check is performed to
 
 <a name="BitSet+xor"></a>
 ### bitSet.xor(bsOrIdx) ⇒ <code>[BitSet](#BitSet)</code>
-Perform a bitwise XOR on two bitsets
+Perform a bitwise XOR on 2 bitsets or 1 bitset and 1 index.
 Both bitsets must have the same number of words, no length check is performed to prevent and overflow.
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
@@ -219,6 +221,19 @@ Get the indices of all set bits. Useful for debugging, uses `forEach` internally
 
 **Kind**: instance method of <code>[BitSet](#BitSet)</code>  
 **Returns**: <code>Array</code> - Indices of all set bits  
+<a name="BitSet+isSubsetOf"></a>
+### bitSet.isSubsetOf(bitset) ⇒ <code>Boolean</code>
+Checks if one bitset is subset of another. Same thing can be done using _and_ operation and equality check,
+but then new BitSet would be created, and if one is only interested in yes/no information it would be a waste of memory
+and additional GC strain.
+
+**Kind**: instance method of <code>[BitSet](#BitSet)</code>  
+**Returns**: <code>Boolean</code> - `true` if provided bitset is a subset of this bitset, `false` otherwise  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| bitset | <code>[BitSet](#BitSet)</code> | to check |
+
 <a name="BitSet+isEmpty"></a>
 ### bitSet.isEmpty() ⇒ <code>boolean</code>
 Quickly determine if a bitset is empty
@@ -235,7 +250,7 @@ Both bitsets must have the same number of words, no length check is performed to
 
 | Param | Type |
 | --- | --- |
-| bs | <code>[BitSet](#BitSet)</code> | 
+| bs | <code>[BitSet](#BitSet)</code> |
 
 <a name="BitSet+toString"></a>
 ### bitSet.toString() ⇒ <code>string</code>
@@ -330,4 +345,3 @@ Find last unset bit, up to a given index
 | Param | Type | Description |
 | --- | --- | --- |
 | idx | <code>number</code> | the starting index for the next unset bit (going in reverse) |
-

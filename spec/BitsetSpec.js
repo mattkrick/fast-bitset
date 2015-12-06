@@ -132,6 +132,24 @@ describe("BitSet", function () {
     expect(bs.isEmpty()).toBe(true);
   });
 
+  it('should check if one bitset is subset of another', function () {
+    var bs = new BitSet(100);
+    var bs2 = new BitSet(100);
+
+    expect(bs.isSubsetOf(bs2)).toBe(true);
+
+    bs.setRange(30, 60);
+    bs2.setRange(30, 60);
+
+    expect(bs2.isSubsetOf(bs)).toBe(true);
+
+    bs2.clear();
+    bs2.setRange(31, 59);
+
+    expect(bs2.isSubsetOf(bs)).toBe(true);
+    expect(bs.isSubsetOf(bs2)).toBe(false);
+  })
+
   it('should check for equality', function () {
     var bs = new BitSet(100);
     bs.setRange(29,59);

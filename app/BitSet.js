@@ -230,6 +230,25 @@ BitSet.prototype.getIndices = function () {
 };
 
 /**
+ * Checks if one bitset is subset of another. Same thing can be done using _and_ operation and equality check,
+ * but then new BitSet would be created, and if one is only interested in yes/no information it would be a waste of memory
+ * and additional GC strain.
+ * @param {BitSet} bitset a bitset to check
+ * @returns {Boolean} `true` if provided bitset is a subset of this bitset, `false` otherwise
+ */
+BitSet.prototype.isSubsetOf = function (bs) {
+  var arr1 = this.arr;
+  var arr2 = bs.arr;
+  var len = Math.max(arr1.length, arr2.length);
+  for (var i = 0; i < len; i++) {
+    if ((arr1[i] & arr2[i]) !== arr1[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
  * Quickly determine if a bitset is empty
  * @returns {boolean} true if the entire bitset is empty, else false
  */
