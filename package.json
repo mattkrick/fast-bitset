@@ -1,6 +1,6 @@
 {
   "name": "fast-bitset",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "a fast bitset with some neat methods",
   "main": "./app/BitSet.js",
   "keywords": [
