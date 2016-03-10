@@ -32,9 +32,7 @@ BitSet = function (nBitsOrKey) {
     }
     wordCount = Math.ceil((this.MAX_BIT + 1) / BITS_PER_INT);
     this.arr = new Uint32Array(wordCount)
-    for (var i = 0; i < arrVals.length; i++) {
-      this.arr[i] = arrVals[i];
-    }
+    this.arr.set(arrVals);
   }
 };
 
