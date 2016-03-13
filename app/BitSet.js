@@ -30,7 +30,9 @@ BitSet = function (nBitsOrKey) {
       for (i = 0; i < arrVals.length; i++) front[leadingZeros + i] = arrVals[i];
       arrVals = front;
     }
-    this.arr = new Uint32Array(arrVals);
+    wordCount = Math.ceil((this.MAX_BIT + 1) / BITS_PER_INT);
+    this.arr = new Uint32Array(wordCount)
+    this.arr.set(arrVals);
   }
 };
 
