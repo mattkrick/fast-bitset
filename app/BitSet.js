@@ -204,6 +204,24 @@ BitSet.prototype.forEach = function (func) {
     func(i);
   }
 };
+
+/**
+ * Rotate a bitset by an offset
+ * @param {Number} index of current bitset that will be rotated to index 0 in the new bitset
+ * @returns {Bitset} a new bitset that is rotated by the offset
+ */
+BitSet.prototype.rotate = function (offset) {
+  var original = this;
+  const LEN = original.MAX_BIT+1
+  offset = LEN + (offset%LEN); // make offset positive, i.e. -300 ~= 1 (mod 7)
+  var rotated = new BitSet(LEN+1);
+  original.forEach(function(i){
+    rotated.set(i+offset % LEN)
+  })
+  return rotated;
+};
+
+
 /**
  * Get the cardinality (count of set bits) for the entire bitset
  * @returns {number} cardinality

@@ -235,10 +235,22 @@ describe("BitSet", function () {
   });
 
   it('should set bit success which read from dehydrate string', function () {
-    
+
     var bs = new BitSet('2147483646,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,0,9999999');
     expect(bs.get(899)).toBe(false);
     expect(bs.set(899, true)).toBe(true);
     expect(bs.get(899)).toBe(true);
+  });
+
+  it('should rotate a bitset', function () {
+    var bs = new BitSet(5);
+    bs.set(0);
+    expect(bs.get(0)).toBe(true);
+    expect(bs.rotate(3).get(3)).toBe(true);
+    expect(bs.rotate(10).get(0)).toBe(true);
+    expect(bs.rotate(-10).get(0)).toBe(true);
+    expect(bs.rotate(-1).get(4)).toBe(true);
+    expect(bs.rotate(-7).get(3)).toBe(true);
+    expect(bs.rotate(-7).get(6)).toBe(false);
   });
 });
