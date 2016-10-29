@@ -215,7 +215,7 @@ BitSet.prototype.circularShift = function (offset) {
   const LEN = original.MAX_BIT+1
 
   var offset = (LEN + (offset % LEN) ) % LEN;
-  var rotated = new BitSet(LEN+1);
+  var rotated = new BitSet(LEN);
   original.forEach(function(i){
     var j = i+offset;
     if( j > original.MAX_BIT ){ j -= LEN }
