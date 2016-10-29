@@ -211,33 +211,44 @@ BitSet.prototype.forEach = function (func) {
  * @returns {Bitset} a new bitset that is rotated by the offset
  */
 BitSet.prototype.circularShift = function (offset) {
-  // var original = this;
-  // const LEN = original.MAX_BIT+1
-  //
-  // var offset = (LEN + (offset % LEN) ) % LEN;
-  // var rotated = new BitSet(LEN+1);
-  // original.forEach(function(i){
-  //   var j = i+offset;
-  //   if( j > original.MAX_BIT ){ j -= LEN }
-  //   rotated.set(j)
-  // })
-  // return rotated;
-
   var original = this;
-  const len = original.MAX_BIT+1
-  var offset = (len + (offset % len) ) % len;
-  var rotated = new BitSet(len+1);
+  const LEN = original.MAX_BIT+1
 
-  const wordShift = Math.floor(offset / BITS_PER_INT)
-  const bitShiftLeft = (offset % BITS_PER_INT);
-  for (i = 0; i < original.arr.length; i++) {
-    var afteri = i+1;
-    if( afteri > original.arr.length ){ afteri -= original.arr.length }
-    var j = i+wordShift;
-    if( j > original.arr.length ){ j -= original.arr.length }
-    rotated.arr[j] = original.arr[i] << bitShiftLeft | original.arr[afteri] >> (BITS_PER_INT - bitShiftLeft)
-  }
+  var offset = (LEN + (offset % LEN) ) % LEN;
+  var rotated = new BitSet(LEN+1);
+  original.forEach(function(i){
+    var j = i+offset;
+    if( j > original.MAX_BIT ){ j -= LEN }
+    rotated.set(j)
+  })
   return rotated;
+  // console.log("-------------------------")
+  //
+  // console.log("rotating",this)
+  // var original = this;
+  // const len = original.MAX_BIT+1;
+  // var offset = (len + (offset % len) ) % len;
+  // var rotated = new BitSet(len);
+  //
+  // const wordShift = Math.floor(offset / BITS_PER_INT)
+  // console.log("wordshift",wordShift)
+  // const bitShiftLeft = (offset % BITS_PER_INT);
+  // console.log("bitshiftLeft",bitShiftLeft)
+  // for (i = 0; i < original.arr.length; i++) {
+  //   console.log("i",i)
+  //   var afteri = i-1;
+  //   if( afteri < 0 ){ afteri += original.arr.length }
+  //   console.log("afteri",afteri)
+  //   var j = i+wordShift;
+  //   if( j >= original.arr.length ){ j -= original.arr.length }
+  //   console.log("j",j)
+  //   rotated.arr[j] =
+  //         (original.arr[i] << bitShiftLeft) |
+  //         (original.arr[afteri] >>> (BITS_PER_INT - bitShiftLeft ))
+  // }
+  // console.log("ended up with", rotated)
+  // console.log("-------------------------")
+  // return rotated;
 };
 
 

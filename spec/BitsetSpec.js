@@ -241,30 +241,33 @@ describe("BitSet", function () {
     expect(bs.set(899, true)).toBe(true);
     expect(bs.get(899)).toBe(true);
   });
-
+  //
   it('should rotate a small bitset', function () {
-    var bs = new BitSet(5);
-    bs.set(0);
-    expect(bs.get(0)).toBe(true);
-    expect(bs.circularShift(3).get(3)).toBe(true);
-    expect(bs.circularShift(10).get(0)).toBe(true);
-    expect(bs.circularShift(-10).get(0)).toBe(true);
-    expect(bs.circularShift(-1).get(4)).toBe(true);
-    expect(bs.circularShift(-7).get(3)).toBe(true);
-    expect(bs.circularShift(-7).get(6)).toBe(false);
+    var bs = new BitSet(63);
+    bs.set(30);
+    expect(bs.get(30)).toBe(true);
+    expect(bs.circularShift(1).get(31)).toBe(true);
+    expect(bs.circularShift(2).get(32)).toBe(true);
+    expect(bs.circularShift(3).get(33)).toBe(true);
   });
 
   it('should rotate a large bitset', function () {
-    var size = 40;
+    var size = 70;
     var evens = []; for (i=0; i<size/2; i++){evens.push(2*i)}
     var evenBitset = new BitSet(size);
-    for (i=0; i<25; i++){evenBitset.set(2*i)}
+    for (i=0; i<size; i++){evenBitset.set(2*i)}
 
     var odds = [];  for (i=0; i<size/2; i++){odds.push(2*i+1)}
     var oddBitset = new BitSet(size);
-    for (i=0; i<25; i++){oddBitset.set(2*i+1)}
+    for (i=0; i<size; i++){oddBitset.set(2*i+1)}
 
-    expect(evenBitset.circularShift(1).getIndices()).toEqual(odds)
+    expect(evenBitset.circularShift(1).isEqual(oddBitset)).toBe(true)
+    expect(evenBitset.circularShift(2).isEqual(evenBitset)).toBe(true)
+    expect(evenBitset.circularShift(3).isEqual(oddBitset)).toBe(true)
+    expect(evenBitset.circularShift(20).isEqual(evenBitset)).toBe(true)
+    expect(evenBitset.circularShift(31).isEqual(oddBitset)).toBe(true)
+    expect(evenBitset.circularShift(200).isEqual(evenBitset)).toBe(true)
+    expect(evenBitset.circularShift(-301).isEqual(oddBitset)).toBe(true)
   });
 
 });
