@@ -222,33 +222,6 @@ BitSet.prototype.circularShift = function (offset) {
     rotated.set(j)
   })
   return rotated;
-  // console.log("-------------------------")
-  //
-  // console.log("rotating",this)
-  // var original = this;
-  // const len = original.MAX_BIT+1;
-  // var offset = (len + (offset % len) ) % len;
-  // var rotated = new BitSet(len);
-  //
-  // const wordShift = Math.floor(offset / BITS_PER_INT)
-  // console.log("wordshift",wordShift)
-  // const bitShiftLeft = (offset % BITS_PER_INT);
-  // console.log("bitshiftLeft",bitShiftLeft)
-  // for (i = 0; i < original.arr.length; i++) {
-  //   console.log("i",i)
-  //   var afteri = i-1;
-  //   if( afteri < 0 ){ afteri += original.arr.length }
-  //   console.log("afteri",afteri)
-  //   var j = i+wordShift;
-  //   if( j >= original.arr.length ){ j -= original.arr.length }
-  //   console.log("j",j)
-  //   rotated.arr[j] =
-  //         (original.arr[i] << bitShiftLeft) |
-  //         (original.arr[afteri] >>> (BITS_PER_INT - bitShiftLeft ))
-  // }
-  // console.log("ended up with", rotated)
-  // console.log("-------------------------")
-  // return rotated;
 };
 
 
