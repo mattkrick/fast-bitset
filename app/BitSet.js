@@ -206,19 +206,40 @@ BitSet.prototype.forEach = function (func) {
 };
 
 /**
- * Rotate a bitset by an offset
+ * Circular shift bitset by an offset
  * @param {Number} index of current bitset that will be rotated to index 0 in the new bitset
  * @returns {Bitset} a new bitset that is rotated by the offset
  */
-BitSet.prototype.rotate = function (offset) {
+BitSet.prototype.circularShift = function (offset) {
+  // var original = this;
+  // const LEN = original.MAX_BIT+1
+  //
+  // var offset = (LEN + (offset % LEN) ) % LEN;
+  // var rotated = new BitSet(LEN+1);
+  // original.forEach(function(i){
+  //   var j = i+offset;
+  //   if( j > original.MAX_BIT ){ j -= LEN }
+  //   rotated.set(j)
+  // })
+  // return rotated;
+
   var original = this;
-  const LEN = original.MAX_BIT+1
-  offset = LEN + (offset%LEN); // make offset positive, i.e. -300 ~= 1 (mod 7)
-  var rotated = new BitSet(LEN+1);
-  original.forEach(function(i){
-    rotated.set(i+offset % LEN)
-  })
+  const len = original.MAX_BIT+1
+  var offset = (len + (offset % len) ) % len;
+  var rotated = new BitSet(len+1);
+
+  const wordShift = Math.floor(offset / BITS_PER_INT)
+  const bitShiftLeft = (offset % BITS_PER_INT);
+  for (let i = 0; i < original.arr.length; i++) {
+    var afteri = i+1;
+    if( afteri > original.arr.length ){ afteri -= original.arr.length }
+    var j = i+wordShift;
+    if( j > original.arr.length ){ j -= original.arr.length }
+    rotated.arr[j] = original.arr[i] << bitShiftLeft | original.arr[afteri] >> (BITS_PER_INT - bitShiftLeft)
+  }
   return rotated;
+
+  BITS_PER_INT
 };
 
 

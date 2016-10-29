@@ -242,15 +242,29 @@ describe("BitSet", function () {
     expect(bs.get(899)).toBe(true);
   });
 
-  it('should rotate a bitset', function () {
+  it('should rotate a small bitset', function () {
     var bs = new BitSet(5);
     bs.set(0);
     expect(bs.get(0)).toBe(true);
-    expect(bs.rotate(3).get(3)).toBe(true);
-    expect(bs.rotate(10).get(0)).toBe(true);
-    expect(bs.rotate(-10).get(0)).toBe(true);
-    expect(bs.rotate(-1).get(4)).toBe(true);
-    expect(bs.rotate(-7).get(3)).toBe(true);
-    expect(bs.rotate(-7).get(6)).toBe(false);
+    expect(bs.circularShift(3).get(3)).toBe(true);
+    expect(bs.circularShift(10).get(0)).toBe(true);
+    expect(bs.circularShift(-10).get(0)).toBe(true);
+    expect(bs.circularShift(-1).get(4)).toBe(true);
+    expect(bs.circularShift(-7).get(3)).toBe(true);
+    expect(bs.circularShift(-7).get(6)).toBe(false);
   });
+
+  it('should rotate large bitset', function () {
+    var bs = new BitSet(500);
+    bs.set(0);
+    expect(bs.get(0)).toBe(true);
+    expect(bs.circularShift(300).get(300)).toBe(true);
+    expect(bs.circularShift(1000).get(0)).toBe(true);
+    expect(bs.circularShift(-500).get(0)).toBe(true);
+    expect(bs.circularShift(200).get(200)).toBe(true);
+    expect(bs.circularShift(-50).get(450)).toBe(true);
+    expect(bs.circularShift(-775).get(123)).toBe(false);
+  });
+
+
 });
