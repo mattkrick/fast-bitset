@@ -265,6 +265,5 @@ describe("BitSet", function () {
     expect(bs.circularShift(-50).get(450)).toBe(true);
     expect(bs.circularShift(-775).get(123)).toBe(false);
   });
-
-
+  
 });

@@ -238,8 +238,6 @@ BitSet.prototype.circularShift = function (offset) {
     rotated.arr[j] = original.arr[i] << bitShiftLeft | original.arr[afteri] >> (BITS_PER_INT - bitShiftLeft)
   }
   return rotated;
-
-  BITS_PER_INT
 };
 
 
