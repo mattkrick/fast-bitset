@@ -254,16 +254,17 @@ describe("BitSet", function () {
     expect(bs.circularShift(-7).get(6)).toBe(false);
   });
 
-  it('should rotate large bitset', function () {
-    var bs = new BitSet(500);
-    bs.set(0);
-    expect(bs.get(0)).toBe(true);
-    expect(bs.circularShift(300).get(300)).toBe(true);
-    expect(bs.circularShift(1000).get(0)).toBe(true);
-    expect(bs.circularShift(-500).get(0)).toBe(true);
-    expect(bs.circularShift(200).get(200)).toBe(true);
-    expect(bs.circularShift(-50).get(450)).toBe(true);
-    expect(bs.circularShift(-775).get(123)).toBe(false);
+  it('should rotate a large bitset', function () {
+    var size = 40;
+    var evens = []; for (i=0; i<size/2; i++){evens.push(2*i)}
+    var evenBitset = new BitSet(size);
+    for (i=0; i<25; i++){evenBitset.set(2*i)}
+
+    var odds = [];  for (i=0; i<size/2; i++){odds.push(2*i+1)}
+    var oddBitset = new BitSet(size);
+    for (i=0; i<25; i++){oddBitset.set(2*i+1)}
+
+    expect(evenBitset.circularShift(1).getIndices()).toEqual(odds)
   });
-  
+
 });
