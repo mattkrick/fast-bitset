@@ -230,7 +230,7 @@ BitSet.prototype.circularShift = function (offset) {
 
   const wordShift = Math.floor(offset / BITS_PER_INT)
   const bitShiftLeft = (offset % BITS_PER_INT);
-  for (let i = 0; i < original.arr.length; i++) {
+  for (i = 0; i < original.arr.length; i++) {
     var afteri = i+1;
     if( afteri > original.arr.length ){ afteri -= original.arr.length }
     var j = i+wordShift;
