@@ -243,7 +243,7 @@ describe("BitSet", function () {
   });
   //
   it('should rotate a small bitset', function () {
-    var bs = new BitSet(63);
+    var bs = new BitSet(35);
     bs.set(30);
     expect(bs.get(30)).toBe(true);
     expect(bs.circularShift(1).get(31)).toBe(true);
