@@ -242,32 +242,30 @@ describe("BitSet", function () {
     expect(bs.get(899)).toBe(true);
   });
   //
-  it('should rotate a small bitset', function () {
-    var bs = new BitSet(35);
-    bs.set(30);
-    expect(bs.get(30)).toBe(true);
-    expect(bs.circularShift(1).get(31)).toBe(true);
-    expect(bs.circularShift(2).get(32)).toBe(true);
-    expect(bs.circularShift(3).get(33)).toBe(true);
-  });
+  it('should rotate a bitset', function () {
 
-  it('should rotate a large bitset', function () {
-    var size = 70;
-    var evens = []; for (i=0; i<size/2; i++){evens.push(2*i)}
-    var evenBitset = new BitSet(size);
-    for (i=0; i<size; i++){evenBitset.set(2*i)}
+    var sizes = [10,34,70,500];
+    for(var i=0; i<sizes.length; i++) {
+      var size = sizes[i];
+      var evens = []; for (i=0; i<size/2; i++){evens.push(2*i)}
+      var evenBitset = new BitSet(size);
+      for (i=0; i<size; i++){evenBitset.set(2*i)}
 
-    var odds = [];  for (i=0; i<size/2; i++){odds.push(2*i+1)}
-    var oddBitset = new BitSet(size);
-    for (i=0; i<size; i++){oddBitset.set(2*i+1)}
+      var odds = [];  for (i=0; i<size/2; i++){odds.push(2*i+1)}
+      var oddBitset = new BitSet(size);
+      for (i=0; i<size; i++){oddBitset.set(2*i+1)}
 
-    expect(evenBitset.circularShift(1).isEqual(oddBitset)).toBe(true)
-    expect(evenBitset.circularShift(2).isEqual(evenBitset)).toBe(true)
-    expect(evenBitset.circularShift(3).isEqual(oddBitset)).toBe(true)
-    expect(evenBitset.circularShift(20).isEqual(evenBitset)).toBe(true)
-    expect(evenBitset.circularShift(31).isEqual(oddBitset)).toBe(true)
-    expect(evenBitset.circularShift(200).isEqual(evenBitset)).toBe(true)
-    expect(evenBitset.circularShift(-301).isEqual(oddBitset)).toBe(true)
+      expect(evenBitset.getCardinality() == evenBitset.circularShift(5).getCardinality()).toBe(true)
+      expect(evenBitset.circularShift(0).isEqual(evenBitset)).toBe(true)
+      expect(evenBitset.circularShift(size).isEqual(evenBitset)).toBe(true)
+      expect(evenBitset.circularShift(1).isEqual(oddBitset)).toBe(true)
+      expect(evenBitset.circularShift(size+1).isEqual(oddBitset)).toBe(true)
+      expect(evenBitset.circularShift(2).isEqual(evenBitset)).toBe(true)
+      expect(evenBitset.circularShift(size+2).isEqual(evenBitset)).toBe(true)
+      expect(evenBitset.circularShift(-size-3).isEqual(oddBitset)).toBe(true)
+      expect(evenBitset.circularShift(200).isEqual(evenBitset)).toBe(true)
+      expect(evenBitset.circularShift(-301).isEqual(oddBitset)).toBe(true)
+    }
   });
 
 });
