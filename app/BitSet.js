@@ -226,30 +226,21 @@ BitSet.prototype.circularShift = function(offset) {
   var s; var t = 0; // (s)ource and (t)arget word indices
   var i; var j = 0; // current bit indices for source (i) and target (j) words
   var z = 0; // bit index for entire sequence.
-  var zz = 0
 
   offset = (BITS + (offset % BITS)) % BITS // positive, within length
-  // console.log("offset:",offset)
   var s = Math.floor(offset / BITS_PER_INT) % WORDS
   var i = offset % BITS_PER_INT
-  function __LOG(){
-    // console.log("z:",z,"j:",j,"t:",t,"i:",i,"s:",s,"sourceWordLength:",sourceWordLength)
-  }
-  while (z < BITS && zz<200){
-    zz++;
-    // console.log(T.getIndices())
+  while (z < BITS){
     var sourceWordLength = s == WORDS - 1 ? BITS_LAST_WORD : BITS_PER_INT
     var bits = S.arr[s]
-    __LOG()
-    // console.log("source bits:\n",bits.toString(2))
+
     if (i > 0) {
       bits = bits >>> i;
     }
-    // console.log(bits.toString(2))
     if (j > 0) {
       bits = bits << j;
     }
-    // console.log(bits.toString(2))
+
     T.arr[t] = T.arr[t] | bits
 
     var bitsAdded = Math.min(BITS_PER_INT-j,sourceWordLength - i);
