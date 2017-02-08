@@ -228,10 +228,10 @@ BitSet.prototype.circularShift = function(offset) {
   var z = 0; // bit index for entire sequence.
 
   offset = (BITS + (offset % BITS)) % BITS // positive, within length
-  var s = Math.floor(offset / BITS_PER_INT) % WORDS
+  var s = ~~(offset / BITS_PER_INT) % WORDS
   var i = offset % BITS_PER_INT
   while (z < BITS){
-    var sourceWordLength = s == WORDS - 1 ? BITS_LAST_WORD : BITS_PER_INT
+    var sourceWordLength = s === WORDS - 1 ? BITS_LAST_WORD : BITS_PER_INT
     var bits = S.arr[s]
 
     if (i > 0) {
@@ -254,7 +254,7 @@ BitSet.prototype.circularShift = function(offset) {
     if(i >= sourceWordLength){ i = 0; s++;}
     if(s >= WORDS){ s -= WORDS;}
   }
-  T.arr[WORDS-1] = T.arr[WORDS-1] & (MASK_SIGN >>> (31-BITS_LAST_WORD));
+  T.arr[WORDS-1] = T.arr[WORDS-1] & (MASK_SIGN >>> (BITS_PER_INT-BITS_LAST_WORD));
   return T;
 };
 
