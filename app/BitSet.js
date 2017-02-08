@@ -204,6 +204,60 @@ BitSet.prototype.forEach = function (func) {
     func(i);
   }
 };
+
+/**
+ * Circular shift bitset by an offset
+ * @param {Number} number of positions that the bitset that will be shifted to the right.
+ * Using a negative number will result in a left shift.
+ * @returns {Bitset} a new bitset that is rotated by the offset
+ */
+
+BitSet.prototype.circularShift = function(offset) {
+  offset = -offset;
+
+  var S = this; // source BitSet (this)
+  var MASK_SIGN = 0x7fffffff;
+  var BITS = S.MAX_BIT+1;
+  var WORDS = S.arr.length;
+  var BITS_LAST_WORD = BITS_PER_INT - (WORDS*BITS_PER_INT - BITS);
+
+  var T = new BitSet(BITS); // target BitSet (the shifted bitset)
+
+  var s; var t = 0; // (s)ource and (t)arget word indices
+  var i; var j = 0; // current bit indices for source (i) and target (j) words
+  var z = 0; // bit index for entire sequence.
+
+  offset = (BITS + (offset % BITS)) % BITS // positive, within length
+  var s = ~~(offset / BITS_PER_INT) % WORDS
+  var i = offset % BITS_PER_INT
+  while (z < BITS){
+    var sourceWordLength = s === WORDS - 1 ? BITS_LAST_WORD : BITS_PER_INT
+    var bits = S.arr[s]
+
+    if (i > 0) {
+      bits = bits >>> i;
+    }
+    if (j > 0) {
+      bits = bits << j;
+    }
+
+    T.arr[t] = T.arr[t] | bits
+
+    var bitsAdded = Math.min(BITS_PER_INT-j,sourceWordLength - i);
+    z += bitsAdded;
+    j += bitsAdded;
+    if(j >= BITS_PER_INT){
+      T.arr[t] = T.arr[t] & MASK_SIGN
+      j = 0; t++;
+    }
+    i += bitsAdded;
+    if(i >= sourceWordLength){ i = 0; s++;}
+    if(s >= WORDS){ s -= WORDS;}
+  }
+  T.arr[WORDS-1] = T.arr[WORDS-1] & (MASK_SIGN >>> (BITS_PER_INT-BITS_LAST_WORD));
+  return T;
+};
+
 /**
  * Get the cardinality (count of set bits) for the entire bitset
  * @returns {number} cardinality

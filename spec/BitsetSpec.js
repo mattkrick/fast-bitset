@@ -235,10 +235,37 @@ describe("BitSet", function () {
   });
 
   it('should set bit success which read from dehydrate string', function () {
-    
+
     var bs = new BitSet('2147483646,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,2147483647,0,9999999');
     expect(bs.get(899)).toBe(false);
     expect(bs.set(899, true)).toBe(true);
     expect(bs.get(899)).toBe(true);
   });
+  //
+  it('should rotate a bitset', function () {
+
+    var sizes = [10,34,70,500];
+    for(var i=0; i<sizes.length; i++) {
+      var size = sizes[i];
+      var evens = []; for (i=0; i<size/2; i++){evens.push(2*i)}
+      var evenBitset = new BitSet(size);
+      for (i=0; i<size; i++){evenBitset.set(2*i)}
+
+      var odds = [];  for (i=0; i<size/2; i++){odds.push(2*i+1)}
+      var oddBitset = new BitSet(size);
+      for (i=0; i<size; i++){oddBitset.set(2*i+1)}
+
+      expect(evenBitset.getCardinality() == evenBitset.circularShift(5).getCardinality()).toBe(true)
+      expect(evenBitset.circularShift(0).isEqual(evenBitset)).toBe(true)
+      expect(evenBitset.circularShift(size).isEqual(evenBitset)).toBe(true)
+      expect(evenBitset.circularShift(1).isEqual(oddBitset)).toBe(true)
+      expect(evenBitset.circularShift(size+1).isEqual(oddBitset)).toBe(true)
+      expect(evenBitset.circularShift(2).isEqual(evenBitset)).toBe(true)
+      expect(evenBitset.circularShift(size+2).isEqual(evenBitset)).toBe(true)
+      expect(evenBitset.circularShift(-size-3).isEqual(oddBitset)).toBe(true)
+      expect(evenBitset.circularShift(200).isEqual(evenBitset)).toBe(true)
+      expect(evenBitset.circularShift(-301).isEqual(oddBitset)).toBe(true)
+    }
+  });
+
 });

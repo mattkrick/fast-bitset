@@ -37,9 +37,10 @@ MIT
   * [.or(bsOrIdx)](#BitSet+or) ⇒ <code>[BitSet](#BitSet)</code>
   * [.xor(bsOrIdx)](#BitSet+xor) ⇒ <code>[BitSet](#BitSet)</code>
   * [.forEach(func)](#BitSet+forEach)
+  * [.circularShift(number)](#BitSet+circularShift) ⇒ <code>Bitset</code>
   * [.getCardinality()](#BitSet+getCardinality) ⇒ <code>number</code>
   * [.getIndices()](#BitSet+getIndices) ⇒ <code>Array</code>
-  * [.isSubsetOf(bitset)](#BitSet+isSubsetOf) ⇒ <code>Boolean</code>
+  * [.isSubsetOf(bs)](#BitSet+isSubsetOf) ⇒ <code>Boolean</code>
   * [.isEmpty()](#BitSet+isEmpty) ⇒ <code>boolean</code>
   * [.isEqual(bs)](#BitSet+isEqual) ⇒ <code>boolean</code>
   * [.toString()](#BitSet+toString) ⇒ <code>string</code>
@@ -208,6 +209,17 @@ Source code includes a nice pattern to follow if you need to break the for-loop 
 | Param | Type | Description |
 | --- | --- | --- |
 | func | <code>function</code> | the function to pass the next set bit to |
+
+<a name="BitSet+circularShift"></a>
+### bitSet.circularShift(number) ⇒ <code>Bitset</code>
+Circular shift bitset by an offset
+
+**Kind**: instance method of <code>[BitSet](#BitSet)</code>  
+**Returns**: <code>Bitset</code> - a new bitset that is rotated by the offset  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| number | <code>Number</code> | of positions that the bitset that will be shifted to the right. Using a negative number will result in a left shift. |
 
 <a name="BitSet+getCardinality"></a>
 ### bitSet.getCardinality() ⇒ <code>number</code>
