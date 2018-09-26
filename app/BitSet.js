@@ -1,6 +1,6 @@
 //Matt Krick, matt.krick@gmail.com, MIT License
 
-//each bin holds bits 0 - 30, totaling 31 (sign takes up last bit)
+//each bin holds bits
 var BITS_PER_INT = 31;
 //used for ffs of a word in O(1) time. LUTs get a bad wrap, they are fast.
 var multiplyDeBruijnBitPosition = [0, 1, 28, 2, 29, 14, 24, 3, 30, 22, 20, 15, 25, 17, 4, 8,
