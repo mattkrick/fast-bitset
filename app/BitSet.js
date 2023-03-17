@@ -13,7 +13,7 @@ var multiplyDeBruijnBitPosition = [0, 1, 28, 2, 29, 14, 24, 3, 30, 22, 20, 15, 2
  * For speed and space concerns, the initial number of bits cannot be increased.
  * @constructor
  */
-BitSet = function (nBitsOrKey) {
+var BitSet = function (nBitsOrKey) {
   var wordCount, arrVals, front, leadingZeros, i;
   if (typeof nBitsOrKey === 'number') {
     nBitsOrKey = nBitsOrKey || BITS_PER_INT; //default to 1 word
